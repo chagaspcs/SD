@@ -61,12 +61,12 @@ public class Repositorio {
     }
 
     public List<Country> listarCountry() {
-        //String sql = "SELECT * FROM " + SQLHelper.TABELA_COUNTRY;
-        String sql = "SELECT * FROM " + SQLHelper.TABELA_COUNTRY + " WHERE COLUNA_subregion = ?";
+        String sql = "SELECT * FROM " + SQLHelper.TABELA_COUNTRY;
+        //String sql = "SELECT * FROM " + SQLHelper.TABELA_COUNTRY + " WHERE COLUNA_subregion = ?";
         db = helper.getReadableDatabase();
-        String[] selectionArgs = {"South America"};
-        //Cursor cursor = db.rawQuery(sql, null);
-        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        //String[] selectionArgs = {"South America"};
+        Cursor cursor = db.rawQuery(sql, null);
+        //Cursor cursor = db.rawQuery(sql, selectionArgs);
         List<Country> list = new ArrayList();
 
         while (cursor.moveToNext()) {
