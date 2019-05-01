@@ -43,12 +43,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
 
         //coordenadas do pais
-        String coordenada = country.latlng;
-        String coordenadas[] = coordenada.split(",");
-        LatLng countrylatlng = new LatLng(Double.parseDouble(coordenadas[0]), Double.parseDouble(coordenadas[1]));
+     //   String coordenada = country.latlng;
+     //   String coordenadas[] = coordenada.split(",");
+        LatLng countrylatlng = new LatLng(Double.parseDouble(country.latlng[0]), Double.parseDouble(country.latlng[1]));
 
         //adiciona marcador e move a camera do mapa para ele
         googleMap.addMarker(new MarkerOptions().position(countrylatlng).title(country.nome));
+        googleMap.addMarker(new MarkerOptions().position(countrylatlng).title(country.capital));
+        googleMap.addMarker(new MarkerOptions().position(countrylatlng).title(country.population));
+        googleMap.addMarker(new MarkerOptions().position(countrylatlng).title(country.region));
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(countrylatlng, 12.0f));
     }
 }

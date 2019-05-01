@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
+//import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -24,7 +24,6 @@ import java.util.Random;
 import com.fractal.mycontries.Adapter.Adapter;
 import com.fractal.mycontries.Model.Country;
 import com.fractal.mycontries.dao.Repositorio;
-import com.fractal.mycontries.util.Http;
 import com.fractal.mycontries.util.HttpRetro;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,55 +72,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         });
     }
 
-    private void getData() {
-
-        String[] paises = {"Afghanistan", "Albania", "Andorra", "Angola"};
-        String[] capitais = {"Tirana", "Luanda", "The Valley", "Buenos Aires"};
-
-        countryList.clear();
-        for (int i=0; i<20; i++){
-            int nextInt = new Random().nextInt(4);
-            Country country = new Country(paises[nextInt],"","","","",capitais[nextInt],"","","","","","","","","","","","","","","","");
-            countryList.add(country);
-        }
-        adapter.notifyDataSetChanged();
-    }
-
     @Override
     public void onRefresh() {
         getDataRetro();
 
-    }
-
-    // chama AsyncTask para requisicao dos paises
-    public void getDataHttp () {
-        CountryTask mTask = new CountryTask();
-        mTask.execute();
-    }
-
-    class CountryTask extends AsyncTask<Void, Void, List<Country>> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            swiperefresh.setRefreshing(true);
-        }
-
-        @Override
-        protected List<Country> doInBackground(Void... voids) {
-            return Http.carregarCountryJson();
-        }
-
-        @Override
-        protected void onPostExecute(List<Country> country) {
-            super.onPostExecute(country);
-            if (country != null) {
-                countryList.clear();
-                countryList.addAll(country);
-                adapter.notifyDataSetChanged();
-            }
-            swiperefresh.setRefreshing(false);
-        }
     }
 
     public void getDataRetro() {

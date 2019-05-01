@@ -23,26 +23,26 @@ public class Repositorio {
         db = helper.getReadableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(SQLHelper.COLUNA_name, country.nome);
-        cv.put(SQLHelper.COLUNA_topLevelDomain, country.topLevelDomain);
+     //   cv.put(SQLHelper.COLUNA_topLevelDomain, country.topLevelDomain);
         cv.put(SQLHelper.COLUNA_alpha2Code, country.alpha2Code);
         cv.put(SQLHelper.COLUNA_alpha3Code, country.alpha3Code);
-        cv.put(SQLHelper.COLUNA_callingCodes, country.callingCodes);
+     //   cv.put(SQLHelper.COLUNA_callingCodes, country.callingCodes);
         cv.put(SQLHelper.COLUNA_capital, country.capital);
-        cv.put(SQLHelper.COLUNA_altSpellings, country.altSpellings);
+     //   cv.put(SQLHelper.COLUNA_altSpellings, country.altSpellings);
         cv.put(SQLHelper.COLUNA_region, country.region);
         cv.put(SQLHelper.COLUNA_subregion, country.subregion);
         cv.put(SQLHelper.COLUNA_population, country.population);
-        cv.put(SQLHelper.COLUNA_latlng, country.latlng);
+        cv.put(SQLHelper.COLUNA_latlng, String.valueOf(country.latlng));
         cv.put(SQLHelper.COLUNA_demonym, country.demonym);
         cv.put(SQLHelper.COLUNA_area, country.area);
         cv.put(SQLHelper.COLUNA_gini, country.gini);
-        cv.put(SQLHelper.COLUNA_timezones, country.timezones);
-        cv.put(SQLHelper.COLUNA_borders, country.borders);
+     //   cv.put(SQLHelper.COLUNA_timezones, country.timezones);
+     //   cv.put(SQLHelper.COLUNA_borders, country.borders);
         cv.put(SQLHelper.COLUNA_nativeName, country.nativeName);
         cv.put(SQLHelper.COLUNA_numericCode, country.numericCode);
-        cv.put(SQLHelper.COLUNA_currencies, country.currencies);
-        cv.put(SQLHelper.COLUNA_languages, country.languages);
-        cv.put(SQLHelper.COLUNA_translations, country.translations);
+     //   cv.put(SQLHelper.COLUNA_currencies, country.currencies);
+     //   cv.put(SQLHelper.COLUNA_languages, country.languages);
+     //   cv.put(SQLHelper.COLUNA_translations, country.translations);
         cv.put(SQLHelper.COLUNA_relevance, country.relevance);
 
         long id = db.insert(SQLHelper.TABELA_COUNTRY, null, cv);
@@ -61,9 +61,12 @@ public class Repositorio {
     }
 
     public List<Country> listarCountry() {
-        String sql = "SELECT * FROM " + SQLHelper.TABELA_COUNTRY;
+        //String sql = "SELECT * FROM " + SQLHelper.TABELA_COUNTRY;
+        String sql = "SELECT * FROM " + SQLHelper.TABELA_COUNTRY + " WHERE COLUNA_subregion = ?";
         db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery(sql, null);
+        String[] selectionArgs = {"South America"};
+        //Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
         List<Country> list = new ArrayList();
 
         while (cursor.moveToNext()) {
@@ -134,29 +137,8 @@ public class Repositorio {
             String relevance = cursor.getString(
                     cursor.getColumnIndex(SQLHelper.COLUNA_relevance)
             );
+            Country country = new Country(nome, topLevelDomain, alpha2Code, alpha3Code, callingCodes, capital, altSpellings, region, subregion, population, latlng, demonym, area, gini, timezones, borders, nativeName, numericCode, currencies, languages, translations, relevance);
 
-            Country country = new Country(  nome,
-                                            topLevelDomain,
-                                            alpha2Code,
-                                            alpha3Code,
-                                            callingCodes,
-                                            capital,
-                                            altSpellings,
-                                            region,
-                                            subregion,
-                                            population,
-                                            latlng,
-                                            demonym,
-                                            area,
-                                            gini,
-                                            timezones,
-                                            borders,
-                                            nativeName,
-                                            numericCode,
-                                            currencies,
-                                            languages,
-                                            translations,
-                                            relevance);
             list.add(country);
         }
         cursor.close();

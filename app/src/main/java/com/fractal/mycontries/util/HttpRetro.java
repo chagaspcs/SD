@@ -8,6 +8,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 
+/**
+ * Classe Retrofit
+ * @author Patrick Chagas dos Santos &lt;patrick.chagas@gmail.com&gt;
+ * @version 1, 20190430
+ */
 public class HttpRetro {
     private static final String BASE_URL = "https://restcountries.eu/";
 
